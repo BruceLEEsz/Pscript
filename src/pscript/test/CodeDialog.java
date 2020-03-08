@@ -10,6 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+/**
+ * 文本读取框
+ */
 public class CodeDialog extends Reader {
     private String buffer = null;
     private int pos = 0;
