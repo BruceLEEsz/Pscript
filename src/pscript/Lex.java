@@ -11,18 +11,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Lex {
-    private static String num="-?[0-9]*.?[0-9]+";
-    /**
-    String complex_num = "-?\\d+[-+]\\d+i";
-    String comment = "//.*";
-    String id = "[A-Z_a-z][A-Z_a-z0-9]*|==|<=|>=|&&|\\|\\||\\p{Punct}";
-    String str = "\"(\\\\\"|\\\\\\\\|\\\\n|[^\"])*\"";
-    String regexPat = "\\s*" + "(" + "(" + comment + ")" + "|" + "(" + complex_num + ")" + "|"
-            + "(" + const_num + ")" + "|" + "(" + str + ")" + "|" +  id + ")?";
-     */
+    //private static String num = "-?[0-9]*.?[0-9]+";
+    private static String num="[1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*|-?[1-9][0-9]*";
+    private static String str = "\"(\\\\\"|\\\\\\\\|\\\\n|[^\"])*\"";
+    private static String op = "==|<=|>=|&&|\\|\\||\\p{Punct}";
+    private static String id = "[A-Z_a-z][A-Z_a-z0-9]*";
     public static String regexPat
-            = "\\s*((//.*)|("+num+")|(\"(\\\\\"|\\\\\\\\|\\\\n|[^\"])*\")"
-            + "|[A-Z_a-z][A-Z_a-z0-9]*|==|<=|>=|&&|\\|\\||\\p{Punct})?";
+            = "\\s*((//.*)|(" + num + ")|(" + str + ")" + "|("+id+")|(" + op + "))?";
     private Pattern pattern = Pattern.compile(regexPat);
     private List<Token> list = new ArrayList<Token>();
     private boolean isEnd;
@@ -43,12 +38,14 @@ public class Lex {
     public void addToken(int lineNo, Matcher matcher) {
         String m = matcher.group(1);//全局匹配
         if (m != null) {//获取
-            if (matcher.group(2) == null) {//匹配注释为空，即非注释
+            if (matcher.group(2) == null) {//非注释
                 Token token;
-                if (matcher.group(3) != null)
+                if (matcher.group(3) != null)//匹配数字
                     token = new NumToken(lineNo, "num", m);
-                else if (matcher.group(4) != null)
+                else if (matcher.group(4) != null)//匹配字符串
                     token = new NumToken(lineNo, "string", m);
+                else if (matcher.group(7) != null)//匹配操作符
+                    token = new OpToken(lineNo, "op", m);
                 else
                     token = new IdToken(lineNo, "identifier", m);
                 list.add(token);
