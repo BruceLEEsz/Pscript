@@ -34,29 +34,24 @@ public class ProductionList {
     }
 
     /**
-     * 设置终结符
+     * 从所有产生式中将终结符选出
      */
     public List<String> setToken() {
         List<String> token = new ArrayList<>();
         token.add("$");
         for (Production production : productions) {
             for (int i = 0; i < production.getRight().length; i++) {
+                //不是非终结符且未加入token
                 if (!isVariable(production.getRight()[i])
                         && !token.contains(production.getRight()[i])) {
                     token.add(production.getRight()[i]);
                 }
             }
         }
-        System.out.println(token);
+        //System.out.println(token);
         return token;
     }
 
-    /**
-     * 判断是终结符还是非终结符
-     *
-     * @param s
-     * @return
-     */
     private boolean isVariable(String s) {
         for (Production production : productions) {
             if (production.getLeft().equals(s)) {
@@ -67,26 +62,21 @@ public class ProductionList {
     }
 
     public void read() throws IOException {
-        String productions = new FileRead().getProduces(path);
-        String[] produces = productions.split("\n");
-        String[] part;// 左右部分分组
-        String[] rightItems;// 右边的项分组
-        String[] rightPro;
-        for (String produce : produces) {
-            // System.out.println(produce);
-            part = produce.split(" -> ");
+        String[] productions = new FileRead().getProduces(path).split("\n");
+        String[] part;
+        String[] rightItems;
+        String[] rightP;
+        for (String p : productions) {
+            part = p.split(" -> ");
             if (part.length == 2) {
                 rightItems = part[1].split("\\|");
                 for (String rightItem : rightItems) {
-                    rightPro = rightItem.split(" ");
+                    rightP = rightItem.split(" ");
                     // System.out.println(rightItems[j]);
-                    Production production = new Production(part[0], rightPro);
+                    Production production = new Production(part[0], rightP);
                     this.productions.add(production);
                 }
-                // System.out.println(proList);
-            } else {
-                throw new Error("一行产生式出现了两个箭头！读取错误");
-            }
+            } else throw new Error("产生式错误");
         }
     }
 
@@ -100,10 +90,11 @@ public class ProductionList {
     }
 
     public static void main(String[] args) throws IOException {
-        ProductionList productionSet = new ProductionList();
-        System.out.println("产生式集合：——————————————————");
-        System.out.println(productionSet.toString());
-        System.out.println("——————————————————————————————");
+        ProductionList productionList = new ProductionList();
+        //System.out.println("产生式集合：——————————————————");
+        //产生式集合
+        System.out.println(productionList.toString());
+        //System.out.println("——————————————————————————————");
     }
 
 }
