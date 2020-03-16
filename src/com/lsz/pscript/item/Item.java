@@ -1,14 +1,14 @@
 package com.lsz.pscript.item;
 
 import com.lsz.pscript.production.Production;
+import com.lsz.pscript.production.ProductionList;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 /**
- * 项目
+ * 项目,测试完成
  */
 public class Item {
     //点的位置，初始为0
@@ -52,46 +52,91 @@ public class Item {
 
     //活前缀右移，构造活前缀
     public Item move() {
+        // System.err.println("move");
         dot = dot + 1;
         String[] newAlpha = new String[alpha.length + 1];
-        System.arraycopy(alpha, 0, newAlpha, 0, alpha.length);
-        //将B中第一个移入
+        for (int i = 0; i < alpha.length; i++) {
+            newAlpha[i] = alpha[i];
+            // System.out.println(newAlpha[i]);
+        }
         newAlpha[alpha.length] = B[0];
-        if (B.length > 1) {
+        // newAlpha[alpha.length] = B;
+        // for (String s : alpha) {
+        // System.out.println(s + " alpha");
+        // }
+        // for (String s : B) {
+        // System.out.println(s + " B");
+        // }
+        // for (String s : beta) {
+        // System.out.println(s + " beta");
+        // }
+        if (B.length > 1) {// 如果B的长度大于1，只修改B和alpha的值，不修改beta，直到B长度等于1，移动需要新的字符。
+            // System.out.println("如果B的长度大于1，只修改B和alpha的值，不修改beta，直到B长度等于1，移动需要新的字符。");
             String[] newB = new String[B.length - 1];
-            System.arraycopy(B, 1, newB, 0, newB.length);
+            for (int i = 0; i < newB.length; i++) {
+                newB[i] = B[i + 1];
+            }
+            // for (String s : newAlpha) {
+            // System.out.println(s + " newAlpha");
+            // }
+            // for (String s : newB) {
+            // System.out.println(s + "----newB");
+            // }
             return new Item(left, newAlpha, newB, beta, a, token);
         } else {
             if (beta.length < 1) {
-                //移动到末尾
+                // 已经没有beta字符了，b的长度也是1，那么一移动，就到了末尾，不能再移动
+                String[] newBeta = {};
+                String[] newB = {""};
+                return new Item(left, newAlpha, newB, newBeta, a, token);
+            } else if (beta.length == 1) {// 还剩下一个beta字符
+                // System.out.println("????");
                 String[] newBeta = {};
                 String[] newB = beta;
                 return new Item(left, newAlpha, newB, newBeta, a, token);
-            } else if (beta.length == 1) {
-                //最后为终结符
-                String[] newBeta = {};
-                String[] newB = beta;
-                return new Item(left, newAlpha, newB, newBeta, a, token);
-            } else {
-                //将dot移至非终结符为止
+            } else {// 还有beta字符，数量大于等于2
                 List<String> B_tmp = new ArrayList<>();
-                int nBeta = 0;
-                for (; nBeta < beta.length; nBeta++) {
-                    B_tmp.add(beta[nBeta]);
-                    if (!token.contains(beta[nBeta])) {
-                        nBeta++;
+                int newlengthB = 0;
+
+                // System.out.println(newlengthB + "..............");
+                // for (String s : beta) {
+                // System.out.println(s + "..............");
+                // }
+                for (; newlengthB < beta.length; newlengthB++) {
+                    B_tmp.add(beta[newlengthB]);
+                    // System.out.println(newlengthB);
+                    // System.out.println(beta[newlengthB]);
+                    if (!token.contains(beta[newlengthB])) {
+                        // 当不再是终结符的时候
+                        newlengthB++;
                         break;
                     }
                 }
-                String[] newB = B_tmp.toArray(new String[0]);
+                String[] strs1 = B_tmp.toArray(new String[B_tmp.size()]);
+                String[] newB = strs1;
                 // 以上是对B进行赋值，这里B必须是读取到非终结符为止的符号
-                String[] newBeta = new String[beta.length - nBeta];
-                System.arraycopy(beta, nBeta, newBeta, 0, newBeta.length);
+                String[] newBeta = new String[beta.length - newlengthB];
+                for (int i = 0; i < newBeta.length; i++) {
+                    newBeta[i] = beta[i + newlengthB];
+                }
+                // for (String s : newAlpha) {
+                // System.out.println(s + " newAlpha");
+                // }
+                // for (String s : newB) {
+                // System.out.println(s + "----newB");
+                // }
+                // for (String s : newBeta) {
+                // System.out.println(s + "-**-newBeta");
+                // }
+                // System.err.println("=----------------=");
+                // System.err.println(new Item(Left, newAlpha, newB, newBeta,
+                // a));
                 return new Item(left, newAlpha, newB, newBeta, a, token);
             }
         }
-    }
 
+
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -141,7 +186,7 @@ public class Item {
         for (String s : a) tmp3.append(s).append("/");
         StringBuilder tmp4 = new StringBuilder();
         for (String s : B) tmp4.append(s);
-        return new String(left + "->" + tmp2 + "." + tmp4 + "~" + tmp + "," + tmp3);
+       return left + "->" + tmp2 + "." + tmp4 + "~" + tmp + "," + tmp3;
     }
 
     /**
@@ -307,4 +352,57 @@ public class Item {
     public void setToken(List<String> token) {
         this.token = token;
     }
+    public static void main(String[] args) throws IOException {
+        // Item item=new Item(left, right, alpha);
+        ProductionList productionList = new ProductionList();
+        System.out.println(productionList.getProductions());
+        Item item = new Item(productionList.getProductions().get(0),
+                productionList.getToken());
+        Item item2 = new Item(productionList.getProductions().get(1),
+                productionList.getToken());
+        Item item3 = new Item(productionList.getProductions().get(2),
+                productionList.getToken());
+        Item item4 = new Item(productionList.getProductions().get(3),
+                productionList.getToken());
+        Item item5 = new Item(productionList.getProductions().get(4),
+                productionList.getToken());
+        Item item6 = new Item(productionList.getProductions().get(5),
+                productionList.getToken());
+        Item item7 = new Item(productionList.getProductions().get(6),
+                productionList.getToken());
+        Item item8 = new Item(productionList.getProductions().get(7),
+                productionList.getToken());
+        // Item item5 = new Item(productionList.getProductions().get(4));
+        System.out.println(productionList.getToken());
+        // System.out.println(item);
+        System.out.println(item);
+
+        System.out.println(item2);
+
+        System.out.println(item3);
+        // System.out.println(item3);
+        // System.out.println(item4);
+        item2 = item2.move();
+        System.out.println(item2);
+        item2 = item2.move();
+        System.out.println(item2);
+        item2 = item2.move();
+        System.out.println(item2);
+        item = item.move();
+        System.out.println(item);
+        item4 = item4.move();
+        System.out.println(item4);
+        item4 = item4.move();
+        System.out.println(item4);
+        item3 = item3.move();
+        System.out.println(item3);
+        System.out.println(item4);
+        System.out.println(item5);
+        System.out.println(item6);
+        System.out.println(item7);
+        System.out.println(item8);
+
+        // System.out.println(item5);
+    }
+
 }

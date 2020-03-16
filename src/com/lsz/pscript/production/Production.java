@@ -44,9 +44,7 @@ public class Production {
     @Override
     public String toString() {
         StringBuilder tmp = new StringBuilder();
-        for (String s : right) {
-            tmp.append(s);
-        }
+        for (String s : right) tmp.append(s);
         return left + "->" + tmp.toString();
     }
 }

@@ -6,6 +6,7 @@ import com.lsz.pscript.item.ItemTable;
 import com.lsz.pscript.production.Production;
 import com.lsz.pscript.production.ProductionList;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -192,8 +193,8 @@ public class ActionTable {
      */
     public String findGotoTable(String Ii, String a) {
         for (GoTo goto_tmp : gotoMap.keySet()) {
-            if (goto_tmp.closureId.equals(Ii) && goto_tmp.path.equals(a)) {
-                return new String(gotoMap.get(goto_tmp));
+            if (goto_tmp.closureID.equals(Ii) && goto_tmp.path.equals(a)) {
+                return gotoMap.get(goto_tmp);
             }
         }
         return "";
@@ -212,13 +213,13 @@ public class ActionTable {
         return stringBuffer.toString();
     }
 
-/**
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws IOException {
         ProductionList productionList = new ProductionList();
         ItemTable itemTable = new ItemTable(productionList);
-        itemTable.setItemSet(itemTable.losure, "I0");
+        itemTable.setItemSet(itemTable.closure, "I0");
         ActionTable actionTable = new ActionTable(productionList.getProductions(),
-                itemTable.gotoMap, itemTable.map);
+                itemTable.gotoMap, itemTable.itemClam);
         System.out.println(actionTable.toString());
         actionTable.setActionTable();
         System.out.println(actionTable.toString());
@@ -226,5 +227,5 @@ public class ActionTable {
     }
 
 
-*/
+
 }

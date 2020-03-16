@@ -14,9 +14,6 @@ public class ItemSet {
     HashSet<Item> items = new HashSet<>();
     HashSet<String> used = new HashSet<>();
 
-    public ItemSet() {
-    }
-
     /**
      * @param B
      * @param productions

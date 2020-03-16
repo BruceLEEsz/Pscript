@@ -20,12 +20,18 @@ public class lexTest {
         Set<String> keyWord=new HashSet<String>(Arrays.asList(k));
         Lex lex = new Lex(new CodeDialog());
         File file = new File("./result.txt");
+        File file1=new File("./r.txt");
         // if file doesnt exists, then create it
         if (!file.exists()) {
             file.createNewFile();
         }
+        if(!file1.exists()){
+            file1.createNewFile();
+        }
         FileWriter fw = new FileWriter(file.getAbsoluteFile());
+        FileWriter fw1=new FileWriter(file1.getAbsoluteFile());
         BufferedWriter bw = new BufferedWriter(fw);
+        BufferedWriter bw1=new BufferedWriter(fw1);
         for (Token t; (t = lex.read()) != Token.EOF; ) {
             //处理关键字
             if(keyWord.contains(t.getValue())){
@@ -36,10 +42,12 @@ public class lexTest {
             //}
             if (!t.getTokenType().equals("EOL")) {
                 bw.write(t.toString() + "\n");
+                bw1.write(t.getValue()+"\n");
                 System.out.println(t.toString());
             }
         }
         bw.close();
+        bw1.close();
         System.out.println("finished");
     }
 
