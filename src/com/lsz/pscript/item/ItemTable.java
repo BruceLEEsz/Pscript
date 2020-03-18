@@ -3,9 +3,7 @@ package com.lsz.pscript.item;
 import com.lsz.pscript.parse.GoTo;
 import com.lsz.pscript.production.ProductionList;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class ItemTable {
@@ -22,146 +20,63 @@ public class ItemTable {
         gotoMap = new HashMap<>();
     }
 
-    /**
-     *
-     * 完成goto表的构建，
-     * 这个函数负责从初始开始构建一个第一层closure，也就是从I0到后面的一级推导，
-     * 然后它把得到的map传到一个新的函数，这个map包含了第二层的闭包，
-     * 新的函数负责从一个map的闭包集合求解下一层闭包，如果这个闭包集合已经存在，就直接建立goto表，
-     * 如果不存在，就新建一个map存下一层的闭包，然后迭代自身求解，直到闭包集合不再增加为止。
-     *
-     * @param closure
-     * @param setName
-     * @return
-     */
-    public Map<String, Closure> setItemSet(Closure closure, String setName) {
-        Map<String, Closure> lrClosure = new HashMap<>();
+    public void setItemSet(Closure closure, String setName) {
+        Map<String, Closure> c = new HashMap<>();
         itemClam.put(setName, closure);
         key++;
         closure.setClosureItem(closure.productions.get(0));// 初始第一个闭包
-        // System.out.println(closure.getNextClosure("c"));
-        // System.out.println(
-        // closure.getNextClosure("c").equals(closure.getNextClosure("c")));
-        // System.out.println("555555555555555555555");
-        for (Iterator<String> iterator = closure.gotoPath().iterator(); iterator
-                .hasNext();) {
-            String path = (String) iterator.next();
-            // closure.getNextClosure(type);
+        for (String path : closure.gotoPath()) {
             Closure tmp = closure.getNextClosure(path);
             if (!itemClam.containsValue(tmp)) {
-                String name = new String("I" + key);
+                String name = "I" + key;
                 itemClam.put(name, tmp);
-                lrClosure.put(name, tmp);
+                c.put(name, tmp);
                 gotoMap.put(new GoTo(setName, path), name);
                 key++;
             } else {
-                // System.out
-                // .println("[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]");
                 gotoMap.put(new GoTo(setName, path), getOutClosure(itemClam, tmp));
             }
         }
-        setItemSetItem(lrClosure);// 新的函数负责从一个map的闭包集合求解下一层闭包
-        System.out.println(itemClam);
-        System.out.println(gotoMap);
-        return itemClam;
+        solveClosure(c);
     }
 
-
     /**
-     * 以一个输入闭包集合为起始，求下一个闭包，一直到-----无法往map里面加闭包集了，
-     * 也就是
-     * 1.需要加的闭包集在map里面，
-     * 2.·已经在最后面的位置了，没有下一个B符号了。
-     * @param lrMap
-     * @return
+     * 求闭包
      */
-    public void setItemSetItem(Map<String, Closure> lrMap) {
-        Map<String, Closure> tmMap = new HashMap<>();
-        System.out.println(lrMap);
-        boolean ischanged = false;// 是否增加了新的Ii集合
-        for (Iterator<String> iterator = lrMap.keySet().iterator(); iterator
-                .hasNext();) {
-            String setName = (String) iterator.next();// 项名
-            // 对这个集合里面的每一个closure求闭包
+    public void solveClosure(Map<String, Closure> m) {
+        Map<String, Closure> tmpMap = new HashMap<>();
+        System.out.println(m);
+        boolean hasChanged = false;
+        for (String setName : m.keySet()) {
             System.out.println(setName);
-
-            for (Iterator<String> iterator2 =
-                 lrMap.get(setName).gotoPath().iterator(); iterator2.hasNext();) {
-                String path = (String) iterator2.next();
-                // System.out.println(path);
-                Closure tmp = lrMap.get(setName).getNextClosure(path);
+            for (String path : m.get(setName).gotoPath()) {
+                Closure tmp = m.get(setName).getNextClosure(path);
                 if (!itemClam.containsValue(tmp)) {
-                    String name = new String("I" + key);
+                    String name = "I" + key;
                     itemClam.put(name, tmp);
-                    tmMap.put(name, tmp);
+                    tmpMap.put(name, tmp);
                     gotoMap.put(new GoTo(setName, path), name);
                     key++;
-                    ischanged = true;
+                    //存在新闭包
+                    hasChanged = true;
                 } else {
-                    // System.out.println("------------------------------------");
                     gotoMap.put(new GoTo(setName, path), getOutClosure(itemClam, tmp));
                 }
-                // LRClosure tmp = lrMap.get(type).getNextClosure(path);
             }
-
         }
-        if (ischanged) {
-            System.out.println("------------进入下一层---------------");
-            setItemSetItem(tmMap);
+        if (hasChanged) {
+            solveClosure(tmpMap);
         }
     }
 
-    public boolean setItemSetItem(Closure closure, String setName) {
-        boolean isChanged = false;
-        // System.out.println(closure.getNextClosure("c"));
-        // System.out.println(
-        // closure.getNextClosure("c").equals(closure.getNextClosure("c")));
-        // System.out.println("555555555555555555555");
-        for (Iterator<String> iterator = closure.gotoPath().iterator(); iterator
-                .hasNext();) {
-            String type = (String) iterator.next();
-            Closure tmp = closure.getNextClosure(type);
-            if (!itemClam.containsValue(tmp)) {
-                String name = new String("I" + key);
-                itemClam.put(name, tmp);
-                gotoMap.put(new GoTo(setName, type), name);
-                key++;
-                isChanged = true;
-            } else {
-                // System.out
-                // .println("[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]");
-                gotoMap.put(new GoTo(setName, type), getOutClosure(itemClam, tmp));
-            }
-        }
-        // System.out.println(map);
-        // System.out.println(gotoMap);
-        return isChanged;
-    }
     /**
      * 在closure图里面找对应值的键值名称，返回该键值
-     * @param lrMap
-     * @param
-     * @return
      */
-    private String getOutClosure(Map<String, Closure> lrMap,
-                                 Closure closure) {
-        for (Iterator<String> iterator = lrMap.keySet().iterator(); iterator
-                .hasNext();) {
-            String type = (String) iterator.next();
-            if (lrMap.get(type).equals(closure)) {
+    private String getOutClosure(Map<String, Closure> lrMap, Closure closure) {
+        for (String type : lrMap.keySet())
+            if (lrMap.get(type).equals(closure))
                 return type;
-            }
-        }
-        return new String("");
+        return "";
     }
-
-
-
-    public static void main(String[] args) throws IOException {
-        ProductionList productionList = new ProductionList();
-        ItemTable itemTable = new ItemTable(productionList);
-        itemTable.setItemSet(itemTable.closure, "I0");
-    }
-
 
 }
