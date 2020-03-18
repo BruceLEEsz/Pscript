@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GoToTable {
-    int line;
+    int column;
     int row;
     //goto表
     String[][] gotoTable;
@@ -35,11 +35,11 @@ public class GoToTable {
         this.closureMap = closureMap;
         row = closureMap.size() + 1;
         variables = getVariables();
-        line = variables.size() + 1;
-        gotoTable = new String[row][line];
+        column = variables.size() + 1;
+        gotoTable = new String[row][column];
         //初始化gotoTable
         for (int i = 0; i < row; i++) {
-            for (int j = 0; j < line; j++) {
+            for (int j = 0; j < column; j++) {
                 gotoTable[i][j] = ".";
             }
         }
@@ -52,38 +52,14 @@ public class GoToTable {
             i++;
         }
     }
-
-
-    @Override
-    public String toString() {
-        StringBuilder stringBuffer = new StringBuilder();
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < line; j++) {
-                stringBuffer.append(gotoTable[i][j]).append(" ");
-            }
-            stringBuffer.append("\n");
-        }
-        return stringBuffer.toString();
-    }
-
-    /**
-     * 获取全部变量
-     *
-     * @return
-     */
     public List<String> getVariables() {
-        List<String> vari = new ArrayList<>();
-        for (Production production : productionList) {
-            for (int i = 0; i < production.getRight().length; i++) {
-                if (isVariable(production.getRight()[i])
-                        && !vari.contains(production.getRight()[i])) {
-                    vari.add(production.getRight()[i]);
-                }
-            }
-        }
-        return vari;
+        List<String> variable = new ArrayList<>();
+        for (Production production : productionList)
+            for (int i = 0; i < production.getRight().length; i++)
+                if (isVariable(production.getRight()[i]) && !variable.contains(production.getRight()[i]))
+                    variable.add(production.getRight()[i]);
+        return variable;
     }
-
 
     /**
      * 判断是不是非终结符
@@ -94,67 +70,44 @@ public class GoToTable {
         return false;
     }
 
-    /**
-     * 如果GOTO(Ii,A)=Ij,那么GOTO[i,A]=j
-     */
     public void setGotoTable() {
-        for (GoTo goTo : gotoMap.keySet()) {
-            if (variables.contains(goTo.getPath())) {
+        for (GoTo goTo : gotoMap.keySet())
+            if (variables.contains(goTo.getPath()))
                 // 如果是变量的话
-                if (!setTable(goTo.getClosureID(), goTo.getPath(), gotoMap.get(goTo))) {
-                    throw new Error("goto产生了冲突！！！！");
-                }
-            }
-        }
-
+                if (!setTable(goTo.getClosureID(), goTo.getPath(), gotoMap.get(goTo)))
+                    throw new Error("setGotoTable():设置goto表冲突");
     }
 
-
     /**
-     * 选定i，a对table进行赋值
-     *
-     * @param i
-     * @param a
-     * @param sj
-     * @return
+     * 对table进行赋值
      */
-    public boolean setTable(String i, String a, String sj) {
-        System.out.println(i);
-        System.out.println(a);
-        System.out.println(sj);
-        int y = 0;
+    public boolean setTable(String name, String i, String type) {
         int x = 0;
-        for (int j = 0; j < line; j++) {
-            if (a.equals(gotoTable[0][j])) {
+        int y = 0;
+        for (int j = 0; j < column; j++) {
+            if (i.equals(gotoTable[0][j])) {
                 y = j;
             }
         }
         for (int j = 0; j < row; j++) {
-            if (i.equals(gotoTable[j][0])) {
+            if (name.equals(gotoTable[j][0])) {
                 x = j;
             }
         }
-        System.out.println(y);
-        System.out.println(x);
         if (gotoTable[x][y].equals(".")) {
-            gotoTable[x][y] = sj;
+            gotoTable[x][y] = type;
             return true;
         }
         return false;
-
     }
 
-    public static void main(String[] args) throws IOException {
-        ProductionList productionList = new ProductionList();
-        ItemTable itemTable = new ItemTable(productionList);
-        itemTable.setItemSet(itemTable.closure, "I0");
-        GoToTable goToTable = new GoToTable(productionList.getProductions(),
-                itemTable.gotoMap, itemTable.itemClam);
-        System.out.println(goToTable.toString());
-        goToTable.setGotoTable();
-
-        System.out.println(goToTable.toString());
-
+    public String showGoTo() {
+        StringBuilder stringBuffer = new StringBuilder();
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++)
+                stringBuffer.append(gotoTable[i][j]).append(" ");
+            stringBuffer.append("\n");
+        }
+        return stringBuffer.toString();
     }
-
 }

@@ -1,4 +1,4 @@
-package com.lsz.pscript.lexer;
+package com.lsz.pscript.Main;
 
 import com.lsz.pscript.lexer.Lex;
 import com.lsz.pscript.lexer.LexException;
@@ -19,7 +19,9 @@ public class lexTest {
                 ,"void","do","default","define","include","import"};
         Set<String> keyWord= new HashSet<>(Arrays.asList(k));
         Lex lex = new Lex(new CodeDialog());
+        //输出的三元组
         File file = new File("./result.txt");
+        //对于语法分析进行预处理，简便语法分析中的一些步骤
         File file1=new File("./r.txt");
         // if file doesnt exists, then create it
         if (!file.exists()) {

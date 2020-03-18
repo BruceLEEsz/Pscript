@@ -4,24 +4,22 @@ import com.lsz.pscript.item.ItemTable;
 import com.lsz.pscript.production.Production;
 import com.lsz.pscript.production.ProductionList;
 import com.lsz.pscript.production.pStack;
-import sun.jvm.hotspot.tools.PStack;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Parser {
-    int line = 0;
+    int column = 0;
     int row = 0;
     String[][] table;
     ActionTable actionTable;
     GoToTable goToTable;
 
-    public int getLine() {
-        return line;
+    public int getColumn() {
+        return column;
     }
 
     public int getRow() {
@@ -47,18 +45,18 @@ public class Parser {
         //System.out.println(actionTable.toString());
         this.actionTable = actionTable;
         this.goToTable = goToTable;
-        line = goToTable.line + actionTable.line - 1;
+        column = goToTable.column + actionTable.column - 1;
         row = goToTable.row;
-        table = new String[row][line];
+        table = new String[row][column];
         for (int i = 0; i < row; i++) {
-            for (int j = 0; j < line; j++) {
-                if (j < actionTable.line) {
+            for (int j = 0; j < column; j++) {
+                if (j < actionTable.column) {
                     // System.out.println(i);
                     // System.out.println(j);
                     // System.out.println(actionTable.getActionTable());
                     table[i][j] = actionTable.getActionTable()[i][j];
                 } else {
-                    table[i][j] = goToTable.getGotoTable()[i][j - actionTable.line + 1];
+                    table[i][j] = goToTable.getGotoTable()[i][j - actionTable.column + 1];
                 }
             }
         }
@@ -68,7 +66,7 @@ public class Parser {
     public String searchActionTable(String input, String top) {
         int y = 0;
         int x = 0;
-        for (int j = 0; j < actionTable.line; j++) {
+        for (int j = 0; j < actionTable.column; j++) {
             if (input.equals(actionTable.actionTable[0][j])) {
                 y = j;
             }
@@ -84,7 +82,7 @@ public class Parser {
     public String searchGotoTable(String input, String A) {
         int y = 0;
         int x = 0;
-        for (int j = 0; j < goToTable.line; j++) {
+        for (int j = 0; j < goToTable.column; j++) {
             if (A.equals(goToTable.gotoTable[0][j])) {
                 y = j;
             }
@@ -101,7 +99,7 @@ public class Parser {
     public String toString() {
         StringBuilder stringBuffer = new StringBuilder();
         for (int i = 0; i < row; i++) {
-            for (int j = 0; j < line; j++) {
+            for (int j = 0; j < column; j++) {
                 stringBuffer.append(table[i][j]).append(" ");
                 // System.out.println("\t" + table[i][j] + "\t");
             }
