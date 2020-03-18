@@ -1,7 +1,7 @@
 S' -> <pro>
 <pro> -> <声明列表>|<pro> <fun>
 <声明列表> -> <声明>|<声明列表> <声明>
-<声明> -> include < <标识符> > ;
+<声明> -> import < <标识符> > ;
 <fun> -> <keyword> <标识符> <param> <复合语句>
 <keyword> -> void|int|char|float|double
 <标识符> -> id

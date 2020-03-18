@@ -1,4 +1,4 @@
-1, include, keyWord
+1, import, keyWord
 1, <, operator
 1, math, identifier
 1, >, operator
@@ -32,9 +32,7 @@
 8, {, operator
 9, d, identifier
 9, =, operator
-9, e, identifier
-9, *, operator
-9, e, identifier
+9, 3.3e3, num
 9, ;, operator
 10, }, operator
 11, e, identifier
@@ -45,5 +43,9 @@
 11, ;, operator
 12, }, operator
 12, ;, operator
-13, }, operator
-14, $, operator
+13, f, identifier
+13, =, operator
+13, "dawdada", string
+13, ;, operator
+14, }, operator
+15, $, operator

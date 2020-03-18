@@ -16,8 +16,8 @@ import java.util.Set;
 public class lexTest {
     public static void main(String[] args) throws LexException, IOException {
         String[] k={"if","else","while","switch","define","int","double","return","class","string","break","continue"
-                ,"void","do","default","define","include"};
-        Set<String> keyWord=new HashSet<String>(Arrays.asList(k));
+                ,"void","do","default","define","include","import"};
+        Set<String> keyWord= new HashSet<>(Arrays.asList(k));
         Lex lex = new Lex(new CodeDialog());
         File file = new File("./result.txt");
         File file1=new File("./r.txt");
