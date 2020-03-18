@@ -1,0 +1,38 @@
+include <id> ;
+void id (int id)
+{
+	int id;
+ while(id > id)
+  do{
+	  if(id != id)
+ {
+	 id=id*id;
+	 }
+	  id=id*id;
+	  };
+ if(id != id)
+ {
+	 while(id > id)
+  do{
+	  if(id != id)
+ {
+	 id=id*id;
+	 }
+	  id=id*id;
+	  };
+	 id=id*id;
+	 }
+}
+
+ void id (int id)
+{
+ while(id < id)
+  do{
+	  id=(digit)-id* id+id;
+	  };
+ if(id != id)
+ {
+	 id=id*id;
+	 }
+ }
+$

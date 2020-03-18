@@ -161,6 +161,7 @@ public class Parser {
             words.add(s);
         }
         while (!action.equals("ACC") && wordId <= words.size()) {
+            // 读取当前输入符号和栈顶部状态
             String word = words.get(wordId);
             String top = stack.getTop();
             action = parser.searchActionTable(word, top);

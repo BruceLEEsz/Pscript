@@ -1,4 +1,4 @@
-package com.lsz.pscript;
+package com.lsz.pscript.lexer;
 
 import com.lsz.pscript.token.Token;
 

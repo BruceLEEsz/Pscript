@@ -1,7 +1,7 @@
-package com.lsz.pscript.test;
+package com.lsz.pscript.lexer;
 
-import com.lsz.pscript.Lex;
-import com.lsz.pscript.LexException;
+import com.lsz.pscript.lexer.Lex;
+import com.lsz.pscript.lexer.LexException;
 import com.lsz.pscript.token.Token;
 import com.lsz.pscript.util.CodeDialog;
 
@@ -16,7 +16,7 @@ import java.util.Set;
 public class lexTest {
     public static void main(String[] args) throws LexException, IOException {
         String[] k={"if","else","while","switch","define","int","double","return","class","main","string","break","continue"
-        ,"void","do","default","define","include",""};
+                ,"void","do","default","define","include"};
         Set<String> keyWord=new HashSet<String>(Arrays.asList(k));
         Lex lex = new Lex(new CodeDialog());
         File file = new File("./result.txt");
@@ -38,11 +38,23 @@ public class lexTest {
                 t.setTokenType("keyWord");
             }
             //if (t.getValue().equals("if") || t.getValue().equals("while") || t.getValue().equals("else")) {
-               // t.setTokenType("keyWord");
+            // t.setTokenType("keyWord");
             //}
             if (!t.getTokenType().equals("EOL")) {
                 bw.write(t.toString() + "\n");
-                bw1.write(t.getValue()+"\n");
+                switch (t.getTokenType()) {
+                    case "identifier":
+                    case "string":
+                        bw1.write("id\n");
+                        break;
+                    case "num":
+                    case "complex_num":
+                        bw1.write("num\n");
+                        break;
+                    default:
+                        bw1.write(t.getValue() + "\n");
+                        break;
+                }
                 System.out.println(t.toString());
             }
         }
@@ -52,4 +64,3 @@ public class lexTest {
     }
 
 }
-

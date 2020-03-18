@@ -1,4 +1,4 @@
-package com.lsz.pscript;
+package com.lsz.pscript.lexer;
 
 import com.lsz.pscript.token.*;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +16,7 @@ public class Lex {
     private static String complex_num="(([1-9][0-9]*)?[-]?[1-9][0-9]*i)";//型如1+2i,i前面必须有系数才能保证识别为复数
     private static String num="([\\d]+([.][\\d]+)?([Ee]-?[\\d]+)?)";
     private static String str = "(\"(\\\\\"|\\\\\\\\|\\\\n|[^\"])*\")";
-    private static String op = "(==|<=|>=|&&|\\|\\||\\p{Punct})";
+    private static String op = "(==|<=|>=|!=|&&|\\|\\||\\p{Punct})";
     private static String id = "([A-Z_a-z][A-Z_a-z0-9]*)";
     public static String regexPat
             = "\\s*((//.*)|" +complex_num+"|"+ num + "|" + str +"|"+op+"|" + id+")?";
