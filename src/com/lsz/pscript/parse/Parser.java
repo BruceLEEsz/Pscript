@@ -35,14 +35,10 @@ public class Parser {
         itemTable.setItemSet(itemTable.closure, "I0");
         GoToTable goToTable = new GoToTable(productionList.getProductions(),
                 itemTable.gotoMap, itemTable.itemClam);
-        //System.out.println(goToTable.toString());
         goToTable.setGotoTable();
-        //System.out.println(goToTable.toString());
         ActionTable actionTable = new ActionTable(productionList.getProductions(),
                 itemTable.gotoMap, itemTable.itemClam);
-        //System.out.println(actionTable.toString());
         actionTable.setActionTable();
-        //System.out.println(actionTable.toString());
         this.actionTable = actionTable;
         this.goToTable = goToTable;
         column = goToTable.column + actionTable.column - 1;
@@ -51,9 +47,6 @@ public class Parser {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
                 if (j < actionTable.column) {
-                    // System.out.println(i);
-                    // System.out.println(j);
-                    // System.out.println(actionTable.getActionTable());
                     table[i][j] = actionTable.getActionTable()[i][j];
                 } else {
                     table[i][j] = goToTable.getGotoTable()[i][j - actionTable.column + 1];
@@ -101,50 +94,14 @@ public class Parser {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
                 stringBuffer.append(table[i][j]).append(" ");
-                // System.out.println("\t" + table[i][j] + "\t");
+                System.out.println("\t" + table[i][j] + "\t");
             }
             stringBuffer.append("\n");
-            // System.out.println("\n");
+            System.out.println("\n");
         }
         return stringBuffer.toString();
     }
-/**
-    public static List<String> getFileContext(String path) {
-        FileReader fileReader = null;
 
-        BufferedReader bufferedReader = null;
-        List<String> list = new ArrayList<String>();
-        String str = "";
-        try {
-            fileReader = new FileReader(path);
-            bufferedReader = new BufferedReader(fileReader);
-            while ((str = bufferedReader.readLine()) != null) {
-                if (str.trim().length() > 2) {
-                    list.add(str);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (bufferedReader != null) {
-                    bufferedReader.close();
-                }
-            } catch (Exception e2) {
-                e2.printStackTrace();
-            }
-
-            try {
-                if (fileReader != null) {
-                    fileReader.close();
-                }
-            } catch (Exception e2) {
-                e2.printStackTrace();
-            }
-        }
-        return list;
-    }
-*/
     public static void main(String[] args) throws IOException {
         ProductionList productionList = new ProductionList();
         Parser parser = new Parser(productionList);
@@ -182,7 +139,6 @@ public class Parser {
                 int r =
                         productionList.getProductions().get(productionId).getRight().length;
                 while (r > 0) {
-                    System.out.println("Parse.main()");
                     System.out.println(stack.pop());
                     r--;
                 }

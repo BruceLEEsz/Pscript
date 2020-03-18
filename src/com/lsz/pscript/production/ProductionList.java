@@ -4,7 +4,6 @@ import com.lsz.pscript.util.FileRead;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class ProductionList {
@@ -19,10 +18,6 @@ public class ProductionList {
 
     public List<Production> getProductions() {
         return productions;
-    }
-
-    public void setProductions(List<Production> productions) {
-        this.productions = productions;
     }
 
     public List<String> getToken() {
@@ -48,7 +43,6 @@ public class ProductionList {
                 }
             }
         }
-        //System.out.println(token);
         return token;
     }
 
@@ -72,7 +66,6 @@ public class ProductionList {
                 rightItems = part[1].split("\\|");
                 for (String rightItem : rightItems) {
                     rightP = rightItem.split(" ");
-                    // System.out.println(rightItems[j]);
                     Production production = new Production(part[0], rightP);
                     this.productions.add(production);
                 }
@@ -91,10 +84,7 @@ public class ProductionList {
 
     public static void main(String[] args) throws IOException {
         ProductionList productionList = new ProductionList();
-        //System.out.println("产生式集合：——————————————————");
-        //产生式集合
         System.out.println(productionList.toString());
-        //System.out.println("——————————————————————————————");
     }
 
 }

@@ -45,10 +45,8 @@ public class ItemTable {
      */
     public void solveClosure(Map<String, Closure> m) {
         Map<String, Closure> tmpMap = new HashMap<>();
-        System.out.println(m);
         boolean hasChanged = false;
         for (String setName : m.keySet()) {
-            System.out.println(setName);
             for (String path : m.get(setName).gotoPath()) {
                 Closure tmp = m.get(setName).getNextClosure(path);
                 if (!itemClam.containsValue(tmp)) {

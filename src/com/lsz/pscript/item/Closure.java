@@ -4,7 +4,6 @@ import com.lsz.pscript.parse.FirstAndFollow;
 import com.lsz.pscript.production.Production;
 import com.lsz.pscript.production.ProductionList;
 
-import java.io.IOException;
 import java.util.*;
 
 public class Closure {
