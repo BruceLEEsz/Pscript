@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class lexTest {
     public static void main(String[] args) throws LexException, IOException {
-        String[] k={"if","else","while","switch","define","int","double","return","class","main","string","break","continue"
+        String[] k={"if","else","while","switch","define","int","double","return","class","string","break","continue"
                 ,"void","do","default","define","include"};
         Set<String> keyWord=new HashSet<String>(Arrays.asList(k));
         Lex lex = new Lex(new CodeDialog());
@@ -45,11 +45,9 @@ public class lexTest {
                 switch (t.getTokenType()) {
                     case "identifier":
                     case "string":
-                        bw1.write("id\n");
-                        break;
                     case "num":
                     case "complex_num":
-                        bw1.write("num\n");
+                        bw1.write("id\n");
                         break;
                     default:
                         bw1.write(t.getValue() + "\n");

@@ -1,29 +1,26 @@
-S' -> <程序>
-<程序> -> <声明列表>|<程序> <函数>
+S' -> <pro>
+<pro> -> <声明列表>|<pro> <fun>
 <声明列表> -> <声明>|<声明列表> <声明>
 <声明> -> include < <标识符> > ;
-<函数> -> <修饰符> <标识符> <形式参数> <复合语句>
-<修饰符> -> void|int|char|float|double
+<fun> -> <keyword> <标识符> <param> <复合语句>
+<keyword> -> void|int|char|float|double
 <标识符> -> id
-<形式参数> -> ( <数据类型> <标识符> )
-<数据类型> -> int|float|double|char|<数据类型> C1
-C1 -> [ digit ]
+<param> -> ( <type> <标识符> )
+<type> -> int|float|double|char
 <复合语句> -> { <语句列表> }|{ }
 <复合语句> -> { <声明语句> <语句列表> }|{ }
-<声明语句> -> <数据类型> <标识符> ;|<数据类型> <赋值语句>
-<语句列表> -> <语句>|<语句列表> <语句>
-<语句> -> <条件语句>|<赋值语句>|<循环语句>
-<赋值语句> -> <Left> = <表达式> ;
-<循环语句> -> while <b> do { <语句列表> } ;
-<条件语句> -> <S1>|<S2>
+<声明语句> -> <type> <标识符> ;|<type> <EQUAL>
+<语句列表> -> <statement>|<语句列表> <statement>
+<statement> -> <IF>|<EQUAL>|<WHILE>
+<EQUAL> -> id = <exp> ;
+<WHILE> -> while <b> do { <语句列表> } ;
+<IF> -> <S1>|<S2>
 <S1> -> if <b> { <语句列表> } else { <语句列表> }
 <S2> -> if <b> { <语句列表> }
-<b> -> ( <逻辑表达式> )
-<逻辑表达式> -> <标识符> <逻辑运算符> <标识符>
-<逻辑运算符> -> >=|<=|<|!|==|!=|>
-<表达式> -> <表达式> + T|T|<表达式> - T
+<b> -> ( <LOGICexp> )
+<LOGICexp> -> <标识符> <LOGICop> <标识符>
+<LOGICop> -> >=|<=|<|!|==|!=|>
+<exp> -> <exp> + T|T|<exp> - T
 T -> F * F|F / F|F
-F -> digit|<标识符>|( <表达式> )
-<Left> -> Elist ]|id
-Elist -> id [ <表达式>
+F -> <标识符>|( <exp> )
 
