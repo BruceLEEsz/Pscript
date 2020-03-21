@@ -16,7 +16,7 @@ import java.util.Set;
 public class lexTest {
     public static void main(String[] args) throws LexException, IOException {
         String[] k={"if","else","while","switch","define","int","double","return","class","string","break","continue"
-                ,"void","do","default","define","include","import"};
+                ,"void","do","default","define","include","import","def","var"};
         Set<String> keyWord= new HashSet<>(Arrays.asList(k));
         Lex lex = new Lex(new CodeDialog());
         //输出的三元组

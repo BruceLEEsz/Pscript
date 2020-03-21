@@ -9,6 +9,11 @@ public class OpToken extends Token {
     }
 
     @Override
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    @Override
     public String toString() {
         return getLineNumber() + ", " + value + ", " + getTokenType();
     }

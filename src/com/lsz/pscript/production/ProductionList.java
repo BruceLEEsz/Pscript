@@ -5,11 +5,24 @@ import com.lsz.pscript.util.FileRead;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ProductionList {
     List<Production> productions = new ArrayList<Production>();
     List<String> token;
     String path = "produce.txt";
+
+    public void setProductions(List<Production> productions) {
+        this.productions = productions;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 
     public ProductionList() throws IOException {
         read();
@@ -80,6 +93,21 @@ public class ProductionList {
             tmp.append(production.toString()).append("\n");
         }
         return tmp.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductionList that = (ProductionList) o;
+        return Objects.equals(productions, that.productions) &&
+                Objects.equals(token, that.token) &&
+                Objects.equals(path, that.path);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productions, token, path);
     }
 
     public static void main(String[] args) throws IOException {

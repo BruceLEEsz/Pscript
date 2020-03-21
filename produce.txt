@@ -3,10 +3,10 @@ S' -> <pro>
 <声明列表> -> <声明>|<声明列表> <声明>
 <声明> -> import < <标识符> > ;
 <fun> -> <keyword> <标识符> <param> <复合语句>
-<keyword> -> void|int|char|float|double
+<keyword> -> void|int|char|float|double|def
 <标识符> -> id
 <param> -> ( <type> <标识符> )
-<type> -> int|float|double|char
+<type> -> int|float|double|char|var
 <复合语句> -> { <语句列表> }|{ }
 <复合语句> -> { <声明语句> <语句列表> }|{ }
 <声明语句> -> <type> <标识符> ;|<type> <EQUAL>

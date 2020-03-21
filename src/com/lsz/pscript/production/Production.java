@@ -1,5 +1,8 @@
 package com.lsz.pscript.production;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Production {
     //左侧产生式
     private String left;
@@ -23,6 +26,30 @@ public class Production {
                 break;
             }
         }
+    }
+
+    public void setLeft(String left) {
+        this.left = left;
+    }
+
+    public void setRight(String[] right) {
+        this.right = right;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Production that = (Production) o;
+        return Objects.equals(left, that.left) &&
+                Arrays.equals(right, that.right);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(left);
+        result = 31 * result + Arrays.hashCode(right);
+        return result;
     }
 
     @Override

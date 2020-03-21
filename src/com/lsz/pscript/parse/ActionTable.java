@@ -143,7 +143,7 @@ public class ActionTable {
         StringBuilder stringBuffer = new StringBuilder();
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++)
-                stringBuffer.append(actionTable[i][j]).append(" ");
+                stringBuffer.append(actionTable[i][j]).append("     ");
             stringBuffer.append("\n");
         }
         return stringBuffer.toString();

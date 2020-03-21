@@ -1,16 +1,19 @@
 import <math> ;
 
-void id (int i)
+def main (int i)
 {
-	int a = 3;
+	var a = 3;//可以用var,int等创建变量
  while(b > c)
   do{
-	  if(d != e)
+        d =2;//也可以像python一样动态创建
+	  if(d != a)
     {
-	 d=3.3e3;
+	  d=3.3e3;
 	 }
-	 e=d/e;
+	 else {
+	  e=d/3;
+	  }
     };
-    f= "dawdada";
+    i= "dawdada";
 }
 $

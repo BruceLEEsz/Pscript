@@ -13,6 +13,14 @@ public class FirstAndFollow {
         productions = productionList.getProductions();
     }
 
+    public List<Production> getProductions() {
+        return productions;
+    }
+
+    public void setProductions(List<Production> productions) {
+        this.productions = productions;
+    }
+
     public boolean isToken(String str) {
         for (Production production : productions)
             if (production.getLeft().equals(str))

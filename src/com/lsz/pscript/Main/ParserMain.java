@@ -53,12 +53,12 @@ public class ParserMain {
                 stack.push(parser.searchGotoTable(stack.peek(),
                         productionList.getProductions().get(productionId).getLeft()));
             } else {
-                throw new Error("进入错误处理！");
+                throw new Error("Parser():程序出错");
             }
         }
 
         if (action.equals("ACC") && wordId == words.size() - 1) {
-            System.out.println("接收!!!!!!!!!!!!!!!!!!!");
+            System.out.println("accept");
         }
     }
 }

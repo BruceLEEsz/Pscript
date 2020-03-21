@@ -13,6 +13,46 @@ public class Closure {
     FirstAndFollow firstAndFollow;
     List<String> used;
 
+    public ProductionList getProductionList() {
+        return productionList;
+    }
+
+    public void setProductionList(ProductionList productionList) {
+        this.productionList = productionList;
+    }
+
+    public List<Production> getProductions() {
+        return productions;
+    }
+
+    public void setProductions(List<Production> productions) {
+        this.productions = productions;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public FirstAndFollow getFirstAndFollow() {
+        return firstAndFollow;
+    }
+
+    public void setFirstAndFollow(FirstAndFollow firstAndFollow) {
+        this.firstAndFollow = firstAndFollow;
+    }
+
+    public List<String> getUsed() {
+        return used;
+    }
+
+    public void setUsed(List<String> used) {
+        this.used = used;
+    }
+
     /**
      * 初始化LR，输入产生式集合
      */

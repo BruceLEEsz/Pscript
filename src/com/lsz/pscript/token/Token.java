@@ -34,6 +34,10 @@ public abstract class Token {
         return value;
     }
 
+    public void setValue(String value) {
+        this.value = value;
+    }
+
     /**
     public boolean isIdentifier() {
         return tokenType.equals("identifier");

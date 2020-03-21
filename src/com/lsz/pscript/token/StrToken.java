@@ -9,6 +9,11 @@ public class StrToken extends Token {
         this.value = value;
     }
 
+    @Override
+    public void setValue(String value) {
+        this.value = value;
+    }
+
     public String getValue() {
         return value;
     }

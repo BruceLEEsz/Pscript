@@ -20,6 +20,14 @@ public class GoTo {
         return path;
     }
 
+    public void setClosureID(String closureID) {
+        this.closureID = closureID;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

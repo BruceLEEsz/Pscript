@@ -14,6 +14,38 @@ public class ItemTable {
     //goto表
     public Map<GoTo, String> gotoMap;
 
+    public Closure getClosure() {
+        return closure;
+    }
+
+    public void setClosure(Closure closure) {
+        this.closure = closure;
+    }
+
+    public Map<String, Closure> getItemClam() {
+        return itemClam;
+    }
+
+    public void setItemClam(Map<String, Closure> itemClam) {
+        this.itemClam = itemClam;
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public void setKey(int key) {
+        this.key = key;
+    }
+
+    public Map<GoTo, String> getGotoMap() {
+        return gotoMap;
+    }
+
+    public void setGotoMap(Map<GoTo, String> gotoMap) {
+        this.gotoMap = gotoMap;
+    }
+
     public ItemTable(ProductionList productionList) {
         closure = new Closure(productionList);// 初始的I0集合
         itemClam = new HashMap<>();
