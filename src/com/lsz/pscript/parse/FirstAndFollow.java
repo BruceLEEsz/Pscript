@@ -109,7 +109,7 @@ public class FirstAndFollow {
     /**
      * 查找A的beta集合
      */
-    public List<String> findBeta(String str) {
+    public List<String> follow(String str) {
         List<String> list = new ArrayList<>();
         for (Production production : productions) {
             for (int i = 0; i < production.getRight().length; i++) {
@@ -144,7 +144,7 @@ public class FirstAndFollow {
     }
 
     public List<String> getFollow(String str) {
-        return new ArrayList<>(findBeta(str));
+        return new ArrayList<>(follow(str));
     }
 }
 

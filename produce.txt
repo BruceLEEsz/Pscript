@@ -1,26 +1,26 @@
 S' -> <pro>
-<pro> -> <声明列表>|<pro> <fun>
-<声明列表> -> <声明>|<声明列表> <声明>
-<声明> -> import < <标识符> > ;
-<fun> -> <keyword> <标识符> <param> <复合语句>
+<pro> -> <announceList>|<pro> <fun>
+<announceList> -> <announce>|<announceList> <announce>
+<announce> -> import < <identifier> > ;
+<fun> -> <keyword> <identifier> <param> <block>
 <keyword> -> void|int|char|float|double|def
-<标识符> -> id
-<param> -> ( <type> <标识符> )
+<identifier> -> id
+<param> -> ( <type> <identifier> )
 <type> -> int|float|double|char|var
-<复合语句> -> { <语句列表> }|{ }
-<复合语句> -> { <声明语句> <语句列表> }|{ }
-<声明语句> -> <type> <标识符> ;|<type> <EQUAL>
-<语句列表> -> <statement>|<语句列表> <statement>
+<block> -> { <statementList> }|{ }
+<block> -> { <announceList> <statementList> }|{ }
+<announceList> -> <type> <identifier> ;|<type> <EQUAL>
+<statementList> -> <statement>|<statementList> <statement>
 <statement> -> <IF>|<EQUAL>|<WHILE>
 <EQUAL> -> id = <exp> ;
-<WHILE> -> while <b> do { <语句列表> } ;
+<WHILE> -> while <b> do { <statementList> } ;
 <IF> -> <S1>|<S2>
-<S1> -> if <b> { <语句列表> } else { <语句列表> }
-<S2> -> if <b> { <语句列表> }
+<S1> -> if <b> { <statementList> } else { <statementList> }
+<S2> -> if <b> { <statementList> }
 <b> -> ( <LOGICexp> )
-<LOGICexp> -> <标识符> <LOGICop> <标识符>
+<LOGICexp> -> <identifier> <LOGICop> <identifier>
 <LOGICop> -> >=|<=|<|!|==|!=|>
 <exp> -> <exp> + T|T|<exp> - T
 T -> F * F|F / F|F
-F -> <标识符>|( <exp> )
+F -> <identifier>|( <exp> )
 
