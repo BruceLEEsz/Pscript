@@ -12,15 +12,14 @@ S' -> <pro>
 <announceList> -> <type> <identifier> ;|<type> <EQUAL>
 <statementList> -> <statement>|<statementList> <statement>
 <statement> -> <IF>|<EQUAL>|<WHILE>
-<EQUAL> -> id = <exp> ;
-<WHILE> -> while <b> do { <statementList> } ;
 <IF> -> <S1>|<S2>
 <S1> -> if <b> { <statementList> } else { <statementList> }
 <S2> -> if <b> { <statementList> }
+<EQUAL> -> id = <exp> ;
+<WHILE> -> while <b> do { <statementList> } ;
 <b> -> ( <LOGICexp> )
-<LOGICexp> -> <identifier> <LOGICop> <identifier>
-<LOGICop> -> >=|<=|<|!|==|!=|>
 <exp> -> <exp> + T|T|<exp> - T
 T -> F * F|F / F|F
 F -> <identifier>|( <exp> )
-
+<LOGICexp> -> <identifier> <LOGICop> <identifier>
+<LOGICop> -> >=|<=|<|!|==|!=|>

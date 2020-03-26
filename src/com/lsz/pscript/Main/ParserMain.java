@@ -36,14 +36,14 @@ public class ParserMain {
                 break;
             } else if (action.contains("s")) {
                 action = action.replaceAll("s", "");
-                System.out.println("移入：" + word);
+                System.out.println("移入" + word+" 终结符");
                 wordId++;
                 stack.push(action);
             } else if (action.contains("r")) {
                 int productionId = Integer.parseInt(action.replaceAll("r", ""));
                 Production production =
                         productionList.getProductions().get(productionId);
-                System.out.println("规约：" + production);
+                System.out.println("规约" + production+" 产生式");
                 int r =
                         productionList.getProductions().get(productionId).getRight().length;
                 while (r > 0){
@@ -53,12 +53,12 @@ public class ParserMain {
                 stack.push(parser.searchGotoTable(stack.peek(),
                         productionList.getProductions().get(productionId).getLeft()));
             } else {
-                throw new Error("Parser():程序出错");
+                throw new Error("Parser():程序读入完全，但未达到接受条件，程序不完整");
             }
         }
 
         if (action.equals("ACC") && wordId == words.size() - 1) {
-            System.out.println("accept");
+            System.out.println("程序规约完全，接受成功");
         }
     }
 }

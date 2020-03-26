@@ -8,12 +8,12 @@ def main (int i)
         d =2;//也可以像python一样动态创建
 	  if(d != a)
     {
-	  d=3.3e3;
+	  d=3.3e3;//科学技术法赋值
 	 }
 	 else {
-	  e=d/3;
+	  e=d/3;//基本数值运算
 	  }
     };
-    i= "dawdada";
+    i= "dawdada";//字符串赋值
 }
 $
