@@ -53,11 +53,12 @@ public class ParserMain {
                 stack.push(parser.searchGotoTable(stack.peek(),
                         productionList.getProductions().get(productionId).getLeft()));
             } else {
-                throw new Error("Parser():程序读入完全，但未达到接受条件，程序不完整");
+                throw new Error("Parser():程序在此处不符合语法");
             }
         }
 
         if (action.equals("ACC") && wordId == words.size() - 1) {
+            System.out.println("规约S' -> <pro>");
             System.out.println("程序规约完全，接受成功");
         }
     }

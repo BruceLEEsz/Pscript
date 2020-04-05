@@ -85,24 +85,24 @@ public class ActionTable {
      * 设置动作表
      */
     public void setActionTable() {
-        for (String setName : closureMap.keySet()) {
-            Closure tmp = closureMap.get(setName);
+        for (String set : closureMap.keySet()) {
+            Closure tmp = closureMap.get(set);
             for (Item item : tmp.items) {
                 if (item.getNextB().equals("") && !item.getLeft().equals("S'")) {
                     // 找到终结符并设置
                     for (int i = 0; i < item.getA().length; i++) {
-                        if (!setTable(setName, item.getA()[i],
+                        if (!setTable(set, item.getA()[i],
                                 "r" + getProductionId(item))) {
                             throw new Error("setActionTable（）：发生错误");
                         }
                     }
                 } else if (item.getLeft().equals("S'") && item.getNextB().equals("")
                         && item.accept()) {//接受情况
-                    setTable(setName, "$", "ACC");
+                    setTable(set, "$", "ACC");
                 } else if (token.contains(item.getNextB())) {//查找goto表
-                    String result = findGotoTable(setName, item.getNextB());
+                    String result = findGotoTable(set, item.getNextB());
                     if (!result.equals("")) {
-                        if (!setTable(setName, item.getNextB(), "s" + result)) {
+                        if (!setTable(set, item.getNextB(), "s" + result)) {
                             throw new Error("setActionTable（）：发生错误");
                         }
                     }

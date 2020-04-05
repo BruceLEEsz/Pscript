@@ -8,8 +8,8 @@ S' -> <pro>
 <param> -> ( <type> <identifier> )
 <type> -> int|float|double|char|var
 <block> -> { <statementList> }|{ }
-<block> -> { <announceList> <statementList> }|{ }
-<announceList> -> <type> <identifier> ;|<type> <EQUAL>
+<block> -> { <announceState> <statementList> }|{ }
+<announceState> -> <type> <identifier> ;|<type> <EQUAL>
 <statementList> -> <statement>|<statementList> <statement>
 <statement> -> <IF>|<EQUAL>|<WHILE>
 <IF> -> <S1>|<S2>

@@ -17,6 +17,7 @@ public class Item {
     private String[] alpha = {};
     private String[] B;
     private String[] beta = {};
+    //向前搜索符，初始为$
     private String[] a = {"$"};
     List<String> token;
 
@@ -42,8 +43,12 @@ public class Item {
     }
 
     //活前缀右移，构造活前缀
+
+    /**
+     *
+     * @return new Item(left, newAlpha, newB, newBeta, a, token)
+     */
     public Item move() {
-        // System.err.println("move");
         dot = dot + 1;
         String[] newAlpha = new String[alpha.length + 1];
         System.arraycopy(alpha, 0, newAlpha, 0, alpha.length);

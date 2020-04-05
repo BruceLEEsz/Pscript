@@ -3,9 +3,10 @@ import <math> ;
 def main (int i)
 {
 	var a = 3;//可以用var,int等创建变量
- while(b > c)
+ while(a > 1)
   do{
         d =2;//也可以像python一样动态创建
+        c ="hello world";
 	  if(d != a)
     {
 	  d=3.3e3;//科学技术法赋值
@@ -13,6 +14,7 @@ def main (int i)
 	 else {
 	  e=d/3;//基本数值运算
 	  }
+	  a=a-1;
     };
     i= "dawdada";//字符串赋值
 }

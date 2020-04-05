@@ -106,9 +106,6 @@ public class FirstAndFollow {
         return false;
     }
 
-    /**
-     * 查找A的beta集合
-     */
     public List<String> follow(String str) {
         List<String> list = new ArrayList<>();
         for (Production production : productions) {
@@ -118,16 +115,15 @@ public class FirstAndFollow {
                             && !production.getRight()[i + 1].equals(production.getLeft())) {
                         List<String> tmp = getFirst(production.getRight()[i + 1]);
                         if (tmp.contains("null")) {
-                            //将FOLLOW(B)加入
-                            //￿￿￿移除null
+                            //若tmp为空，则表示还需要获得该产生式的follow集
+                            //去除null
                             tmp.remove("null");
                             list.addAll(tmp);
+                            //加入该产生式左部的follow集
                             list.addAll(getFollow(production.getLeft()));
                             break;
                         } else {
-                            // 将FIRST(β) - null 加入FOLLOW(A)
-                            // beta不能产生空
-                            tmp.remove("null");
+                            //找到一部分的follow集，加入list中
                             list.addAll(tmp);
                             break;
                         }

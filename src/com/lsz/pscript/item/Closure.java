@@ -11,7 +11,7 @@ public class Closure {
     List<Production> productions;
     public List<Item> items;
     FirstAndFollow firstAndFollow;
-    List<String> used;
+    List<String> searcH;
 
     public ProductionList getProductionList() {
         return productionList;
@@ -45,23 +45,23 @@ public class Closure {
         this.firstAndFollow = firstAndFollow;
     }
 
-    public List<String> getUsed() {
-        return used;
+    public List<String> getSearcH() {
+        return searcH;
     }
 
-    public void setUsed(List<String> used) {
-        this.used = used;
+    public void setSearcH(List<String> searcH) {
+        this.searcH = searcH;
     }
 
     /**
-     * 初始化LR，输入产生式集合
+     * 初始化，输入产生式集合
      */
     public Closure(ProductionList productionList) {
         this.productionList = productionList;
         productions = productionList.getProductions();
         items = new ArrayList<>();
         firstAndFollow = new FirstAndFollow(productionList);
-        used = new ArrayList<>();
+        searcH = new ArrayList<>();
     }
 
     /**
@@ -83,20 +83,20 @@ public class Closure {
      */
     public List<Item> getNextClosureItem(Item item) {
         List<Item> items = new ArrayList<>();
-        List<String> beta_a = new ArrayList<>(Arrays.asList(item.getBeta()));
-        beta_a = firstAndFollow.getFirst(beta_a);
-        if (beta_a.isEmpty()) {
+        List<String> beta = new ArrayList<>(Arrays.asList(item.getBeta()));
+        beta = firstAndFollow.getFirst(beta);
+        if (beta.isEmpty()) {
             for (int i = 0; i < item.getA().length; i++) {
-                if (!beta_a.contains(item.getA()[i])) {
-                    beta_a.add(item.getA()[i]);
+                if (!beta.contains(item.getA()[i])) {
+                    beta.add(item.getA()[i]);
                 }
             }
         }
         for (Production pro : findProduction(item.getNextB())) {
-            beta_a.remove("");
-            Item tmp = new Item(pro, beta_a, productionList.getToken());
+            beta.remove("");
+            Item tmp = new Item(pro, beta, productionList.getToken());
             items.add(tmp);
-            used.add(tmp.getLeft());
+            searcH.add(tmp.getLeft());
         }
         return items;
     }
@@ -107,7 +107,7 @@ public class Closure {
     public void setClosureItem(Production production) {
         Item item = new Item(production, productionList.getToken());// 用产生式构造项
         items.add(item);
-        used.add(item.getLeft());
+        searcH.add(item.getLeft());
         setClosureItem(items);
     }
 
@@ -117,7 +117,7 @@ public class Closure {
         // 求所有项目闭包
         for (Item item : items) {
             List<Item> result = getNextClosureItem(item);
-            used.add(item.getNextB());
+            searcH.add(item.getNextB());
             for (Item tmp : result) {
                 if (!tmpItems.contains(item)) {
                     tmpItems.add(tmp);
